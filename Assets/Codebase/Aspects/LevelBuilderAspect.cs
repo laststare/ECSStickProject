@@ -29,7 +29,7 @@ namespace Codebase.Aspects
             _columnsState.ValueRW.actualColumnPositionOffset = offset;
             return new LocalTransform
             {
-                Position = new Vector3(offset, -1, 0),
+                Position = new Vector3(offset, -1),
                 Rotation = Quaternion.identity,
                 Scale = 1f
             };

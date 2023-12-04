@@ -3,7 +3,6 @@ using Codebase.ComponentsAndTags;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using UnityEngine;
 
 namespace Codebase.Systems
 {
@@ -11,13 +10,6 @@ namespace Codebase.Systems
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial struct SpawnColumnSystem : ISystem
     {
-
-        [BurstCompile]
-        public void OnCreate(ref SystemState state)
-        {
-      
-        }
-        
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
