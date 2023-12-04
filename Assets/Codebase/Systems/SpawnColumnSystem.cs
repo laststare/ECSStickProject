@@ -15,7 +15,6 @@ namespace Codebase.Systems
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            //state.RequireForUpdate<LevelBuilderProperties>();
       
         }
         
@@ -32,27 +31,17 @@ namespace Codebase.Systems
                 ecb.Instantiate(levelBuilder.ColumnPrefab);
                 levelBuilder.StartColumnReady();
             }
+
+            if (levelBuilder.NeedNextColumn)
+            {
+                var nextColumn = ecb.Instantiate(levelBuilder.ColumnPrefab);
+                var nextColumnTransform = levelBuilder.GetNextColumnPosition();
+                ecb.SetComponent(nextColumn, nextColumnTransform);
+                levelBuilder.NextColumnReady();
+            }
+
             ecb.Playback(state.EntityManager);
         }
     }
-
-    [BurstCompile]
-    public partial struct SpawnColumnJob : IJobEntity
-    {
-        public EntityCommandBuffer ECB;
-
-        [BurstCompile]
-        private void Execute(LevelBuilderAspect levelbuilder)
-        {
-            
-            
-            Debug.Log("update");
-            var column1 = ECB.Instantiate(levelbuilder.ColumnPrefab);
-            if (!levelbuilder.StartColumnSpawned)
-            {
-                var column = ECB.Instantiate(levelbuilder.ColumnPrefab);
-                levelbuilder.StartColumnReady();
-            }
-        }
-    }
+    
 }

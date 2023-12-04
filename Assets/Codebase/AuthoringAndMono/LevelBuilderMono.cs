@@ -1,6 +1,5 @@
 ﻿using Codebase.ComponentsAndTags;
 using Unity.Entities;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Codebase.AuthoringAndMono
@@ -8,6 +7,8 @@ namespace Codebase.AuthoringAndMono
     public class LevelBuilderMono : MonoBehaviour
     {
         public GameObject columnPrefab;
+        public int minSpawnDistance;
+        public int maxSpawnDistance;
     }
 
     public class LevelBuilderBaker : Baker<LevelBuilderMono>
@@ -20,7 +21,12 @@ namespace Codebase.AuthoringAndMono
             {
                 columnPrefab = GetEntity(authoring.columnPrefab, TransformUsageFlags.Dynamic) //TODO проверить реально ли нужен dynamic
             });
-            AddComponent(levelBuilderEntity, new ColumnsState());
+            AddComponent(levelBuilderEntity, new ColumnsState
+            {
+                needNextColumn = true,
+                minSpawnDistance = authoring.minSpawnDistance,
+                maxSpawnDistance = authoring.maxSpawnDistance
+            });
         }
     }
 }

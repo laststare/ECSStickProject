@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   columnPrefab: {fileID: 1658101390224254136, guid: 07fac9853a472434f99f61ad8d4a5e45,
     type: 3}
+  minSpawnDistance: 5
+  maxSpawnDistance: 9
 --- !u!4 &355732889
 Transform:
   m_ObjectHideFlags: 0
