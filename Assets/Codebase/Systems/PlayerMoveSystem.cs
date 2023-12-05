@@ -12,8 +12,7 @@ namespace Codebase.Systems
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            var levelFlowEntity = SystemAPI.GetSingletonEntity<LevelFlowProperties>();
-            var levelFlow = SystemAPI.GetAspect<LevelFlowAspect>(levelFlowEntity);
+           
             
             //Debug.Log(levelFlow._levelFlowProperties.ValueRO.flowState);
         }

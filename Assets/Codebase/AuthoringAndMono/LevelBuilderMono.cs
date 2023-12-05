@@ -9,6 +9,8 @@ namespace Codebase.AuthoringAndMono
         public GameObject columnPrefab;
         public int minSpawnDistance;
         public int maxSpawnDistance;
+        public GameObject stickPrefab;
+        public float playerYPosition;
     }
 
     public class LevelBuilderBaker : Baker<LevelBuilderMono>
@@ -19,13 +21,16 @@ namespace Codebase.AuthoringAndMono
             
             AddComponent(levelBuilderEntity, new LevelBuilderProperties
             {
-                columnPrefab = GetEntity(authoring.columnPrefab, TransformUsageFlags.Dynamic) //TODO проверить реально ли нужен dynamic
+                columnPrefab = GetEntity(authoring.columnPrefab, TransformUsageFlags.Dynamic), //TODO проверить реально ли нужен dynamic
+                stickPrefab = GetEntity(authoring.stickPrefab, TransformUsageFlags.Dynamic),
+                playerYPosition = authoring.playerYPosition
+
             });
             AddComponent(levelBuilderEntity, new ColumnsState
             {
                 needNextColumn = true,
                 minSpawnDistance = authoring.minSpawnDistance,
-                maxSpawnDistance = authoring.maxSpawnDistance
+                maxSpawnDistance = authoring.maxSpawnDistance,
             });
         }
     }

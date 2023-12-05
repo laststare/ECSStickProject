@@ -5,5 +5,6 @@ namespace Codebase.ComponentsAndTags
     public struct LevelFlowProperties : IComponentData
     {
         public LevelFlowState flowState;
+        public bool stickIsSpawned;
     }
 }
