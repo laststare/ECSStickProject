@@ -25,6 +25,8 @@ namespace Codebase.Systems
                 var stick = ecb.Instantiate(levelBuilder.StickPrefab);
                 var stickTransform = levelBuilder.GetStickSpawnPosition();
                 ecb.SetComponent(stick, stickTransform);
+              //  ecb.SetComponent(stick, new StickGrow());
+               // ecb.SetComponent(stick, new NewStickTag());
                 levelFlow._levelFlowProperties.ValueRW.stickIsSpawned = true;
             }
             ecb.Playback(state.EntityManager);

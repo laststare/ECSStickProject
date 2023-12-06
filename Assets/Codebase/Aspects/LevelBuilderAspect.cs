@@ -40,6 +40,11 @@ namespace Codebase.Aspects
         {
             var xOffset = _columnsState.ValueRO.actualColumnPositionOffset + 1;
             var yOffset = _levelBuilderProperties.ValueRO.playerYPosition -0.5f;
+
+            new LocalToWorld
+            {
+                
+            };
             
             return new LocalTransform
             {
