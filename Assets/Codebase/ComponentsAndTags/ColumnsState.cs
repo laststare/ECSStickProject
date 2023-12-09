@@ -9,6 +9,11 @@ namespace Codebase.ComponentsAndTags
         public bool needNextColumn;
         public int minSpawnDistance;
         public int maxSpawnDistance;
-        public int actualColumnPositionOffset;
+        public float actualColumnXPosition;
+        public float nextColumnXPosition;
+        public float destinationOffset;
+        public float columnOffset;
+        public bool columnIsReachable;
+
     }
 }

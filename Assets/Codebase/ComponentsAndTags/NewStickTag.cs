@@ -2,7 +2,7 @@
 
 namespace Codebase.ComponentsAndTags
 {
-    public struct NewStickTag : IComponentData
+    public class NewStickTag : IComponentData
     {
         
     }

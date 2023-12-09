@@ -3,6 +3,8 @@ using Codebase.ComponentsAndTags;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
 
 namespace Codebase.Systems
 {
@@ -25,7 +27,16 @@ namespace Codebase.Systems
                 var stick = ecb.Instantiate(levelBuilder.StickPrefab);
                 var stickTransform = levelBuilder.GetStickSpawnPosition();
                 ecb.SetComponent(stick, stickTransform);
-                ecb.AddComponent(stick, new NewStickTag{});
+                ecb.AddComponent(stick, new StickMovementComponent
+                {
+                    scaleСoefficient = 0.25f,
+                    growSpeed = 20,
+                    rotationSpeed = 200
+                });
+                ecb.AddComponent(stick, new PostTransformMatrix
+                {
+                    Value = float4x4.Scale(1, 1, 1f)
+                });
                 levelFlow._levelFlowProperties.ValueRW.stickIsSpawned = true;
             }
             ecb.Playback(state.EntityManager);

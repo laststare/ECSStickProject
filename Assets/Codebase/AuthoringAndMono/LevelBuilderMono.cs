@@ -11,6 +11,8 @@ namespace Codebase.AuthoringAndMono
         public int maxSpawnDistance;
         public GameObject stickPrefab;
         public float playerYPosition;
+        public float destinationOffset;
+        public float columnOffset;
     }
 
     public class LevelBuilderBaker : Baker<LevelBuilderMono>
@@ -31,6 +33,8 @@ namespace Codebase.AuthoringAndMono
                 needNextColumn = true,
                 minSpawnDistance = authoring.minSpawnDistance,
                 maxSpawnDistance = authoring.maxSpawnDistance,
+                destinationOffset = authoring.destinationOffset,
+                columnOffset = authoring.columnOffset
             });
         }
     }
