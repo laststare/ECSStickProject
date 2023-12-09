@@ -7,7 +7,7 @@ namespace Codebase.Aspects
     {
         public readonly Entity Entity;
 
-        public readonly RefRW<StickGrow> _stickGrowSpeed;
+        public readonly RefRW<StickMovementComponent> _stickMovement;
 
     }
 }

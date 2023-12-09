@@ -18,7 +18,7 @@ namespace Codebase.Systems
                 LevelFlowState.StickGrowsUp when !isClicked => LevelFlowState.StickFalls,
                 _ => levelFlow._levelFlowProperties.ValueRW.flowState
             };
-            Debug.Log(levelFlow._levelFlowProperties.ValueRW.flowState);
+                //  Debug.Log(levelFlow._levelFlowProperties.ValueRW.flowState);
         }
     }
 }

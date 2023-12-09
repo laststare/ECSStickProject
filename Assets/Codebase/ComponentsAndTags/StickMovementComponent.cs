@@ -2,9 +2,9 @@
 
 namespace Codebase.ComponentsAndTags
 {
-    public struct StickGrow : IComponentData
+    public struct StickMovementComponent : IComponentData
     {
         public float growSpeed;
-        public float yScale;
+        public float rotationSpeed;
     }
 }
