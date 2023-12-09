@@ -29,12 +29,13 @@ namespace Codebase.Systems
                 ecb.SetComponent(stick, stickTransform);
                 ecb.AddComponent(stick, new StickMovementComponent
                 {
-                    growSpeed = 10,
-                    rotationSpeed = 90
+                    scaleСoefficient = 0.25f,
+                    growSpeed = 20,
+                    rotationSpeed = 200
                 });
                 ecb.AddComponent(stick, new PostTransformMatrix
                 {
-                    Value = float4x4.Scale(1, 0.25f, 1f)
+                    Value = float4x4.Scale(1, 1, 1f)
                 });
                 levelFlow._levelFlowProperties.ValueRW.stickIsSpawned = true;
             }

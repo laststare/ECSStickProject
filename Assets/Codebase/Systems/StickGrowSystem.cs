@@ -36,6 +36,7 @@ namespace Codebase.Systems
                         {
                             Value = matrix
                         });
+                        stick.SetStickLength(_stickLength * 0.25f);
                     }
                     break;
                 }

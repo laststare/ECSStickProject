@@ -1,20 +1,42 @@
-﻿using Codebase.ComponentsAndTags;
+﻿using Codebase.Aspects;
+using Codebase.ComponentsAndTags;
 using Unity.Burst;
 using Unity.Entities;
-using UnityEngine;
 
 namespace Codebase.Systems
 {
     [BurstCompile]
-    [UpdateInGroup(typeof(SimulationSystemGroup))]
-    public partial struct PlayerMoveSystem : ISystem
+    public partial class PlayerMoveSystem : SystemBase
     {
+        private float _playerMoveDistance;
+        
         [BurstCompile]
-        public void OnUpdate(ref SystemState state)
+        protected override void OnUpdate()
         {
-           
+            var levelFlowEntity = SystemAPI.GetSingletonEntity<LevelFlowProperties>();
+            var levelFlow = SystemAPI.GetAspect<LevelFlowAspect>(levelFlowEntity);
+
+            if (levelFlow._levelFlowProperties.ValueRO.flowState != LevelFlowState.PlayerRun) return;
             
-            //Debug.Log(levelFlow._levelFlowProperties.ValueRO.flowState);
+            var levelBuilderEntity = SystemAPI.GetSingletonEntity<LevelBuilderProperties>();
+            var levelBuilder = SystemAPI.GetAspect<LevelBuilderAspect>(levelBuilderEntity);
+            
+            var stickEntity = SystemAPI.GetSingletonEntity<StickMovementComponent>();
+            var stick = SystemAPI.GetAspect<StickAspect>(stickEntity);
+            
+            var playerEntity = SystemAPI.GetSingletonEntity<PlayerProperties>();
+            var player = SystemAPI.GetAspect<PlayerAspect>(playerEntity);
+                
+            if (_playerMoveDistance == 0)
+                _playerMoveDistance = levelBuilder.GetPlayerMoveDistance(stick.GetStickLength());
+
+            if( player.TransformRO.Position.x < _playerMoveDistance)
+                player.Walk(SystemAPI.Time.DeltaTime);
+            else
+            {
+                levelFlow._levelFlowProperties.ValueRW.flowState = levelBuilder.ColumnIsReachable ? LevelFlowState.CameraRun : LevelFlowState.PlayerIdle;
+                _playerMoveDistance = 0;
+            }
         }
     }
 }
