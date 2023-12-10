@@ -9,5 +9,8 @@ namespace Codebase.Aspects
 
         public readonly RefRW<StickMovementComponent> _stickMovement;
 
+        public float GetXPosition() => _stickMovement.ValueRO.xPosition;
+
+
     }
 }

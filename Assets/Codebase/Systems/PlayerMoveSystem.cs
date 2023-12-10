@@ -2,6 +2,7 @@
 using Codebase.ComponentsAndTags;
 using Unity.Burst;
 using Unity.Entities;
+using UnityEngine;
 
 namespace Codebase.Systems
 {

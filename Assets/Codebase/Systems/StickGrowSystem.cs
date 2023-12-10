@@ -58,7 +58,8 @@ namespace Codebase.Systems
                         _stickLength = 0;
                         _zAxisRotation = 0;
                         var query = state.GetEntityQuery(typeof(NewStickTag));
-                        state.EntityManager.RemoveComponent<NewStickTag>(query); 
+                        ecb.RemoveComponent<NewStickTag>(query);
+                        ecb.AddComponent<OldStickTag>(query);
                     }
                     break;
                 }

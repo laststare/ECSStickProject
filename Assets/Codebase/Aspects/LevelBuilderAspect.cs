@@ -41,7 +41,6 @@ namespace Codebase.Aspects
         public LocalTransform GetStickSpawnPosition()
         {
             var xOffset = _columnsState.ValueRO.actualColumnXPosition + 1;
-            Debug.Log(_columnsState.ValueRO.actualColumnXPosition);
             var yOffset = _levelBuilderProperties.ValueRO.playerYPosition - 1.5f;
             
             return new LocalTransform

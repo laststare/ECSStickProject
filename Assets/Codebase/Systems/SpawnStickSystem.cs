@@ -31,7 +31,8 @@ namespace Codebase.Systems
                 {
                     scaleСoefficient = 0.25f,
                     growSpeed = 20,
-                    rotationSpeed = 200
+                    rotationSpeed = 200,
+                    xPosition = stickTransform.Position.x
                 });
                 ecb.AddComponent(stick, new PostTransformMatrix
                 {

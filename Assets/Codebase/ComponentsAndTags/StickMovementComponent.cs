@@ -8,5 +8,6 @@ namespace Codebase.ComponentsAndTags
         public float growSpeed;
         public float rotationSpeed;
         public float stickLength;
+        public float xPosition;
     }
 }
