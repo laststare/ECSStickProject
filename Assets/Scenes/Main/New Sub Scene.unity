@@ -159,6 +159,8 @@ MonoBehaviour:
   stickPrefab: {fileID: 5949274161199183905, guid: f8dee52a1e08f40499b22756d8d59aef,
     type: 3}
   playerYPosition: 9.5
+  destinationOffset: 1
+  columnOffset: 1
 --- !u!4 &355732889
 Transform:
   m_ObjectHideFlags: 0
@@ -317,6 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d678d1e1415c4cab9c0af3a88b7d02e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

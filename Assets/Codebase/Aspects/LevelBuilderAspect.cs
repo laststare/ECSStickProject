@@ -25,7 +25,7 @@ namespace Codebase.Aspects
 
         public LocalTransform GetNextColumnPosition()
         {
-            var offset = _columnsState.ValueRO.actualColumnXPosition +
+            var offset = GetActualColumnXPosition +
                          Random.Range(_columnsState.ValueRO.minSpawnDistance,
                              _columnsState.ValueRO.maxSpawnDistance + 1);
             
@@ -53,7 +53,7 @@ namespace Codebase.Aspects
 
         public float GetPlayerMoveDistance(float stickLength)
         {
-            var moveDistance =  _columnsState.ValueRO.actualColumnXPosition + _columnsState.ValueRO.destinationOffset +
+            var moveDistance =  GetActualColumnXPosition + _columnsState.ValueRO.destinationOffset +
                                 stickLength;
 
             var offset = _columnsState.ValueRO.columnOffset;
@@ -61,7 +61,11 @@ namespace Codebase.Aspects
                                                      moveDistance <= _columnsState.ValueRW.nextColumnXPosition + offset;
             return moveDistance;
         }
-        
 
+        public float GetActualColumnXPosition => _columnsState.ValueRO.actualColumnXPosition;
+
+        public void UpdateActualColumnPosition() =>
+            _columnsState.ValueRW.actualColumnXPosition = _columnsState.ValueRO.nextColumnXPosition;
+        
     }
 }
