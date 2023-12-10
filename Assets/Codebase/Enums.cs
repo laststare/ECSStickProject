@@ -7,7 +7,8 @@
         StickGrowsUp,
         StickFalls,
         PlayerRun,
-        CameraRun
+        CameraRun, 
+        GameOver
     }
 
     public enum MainMenuButton

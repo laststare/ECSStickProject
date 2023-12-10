@@ -20,22 +20,20 @@ namespace Codebase.Systems
             
             var levelBuilderEntity = SystemAPI.GetSingletonEntity<LevelBuilderProperties>();
             var levelBuilder = SystemAPI.GetAspect<LevelBuilderAspect>(levelBuilderEntity);
-            
-            var stickEntity = SystemAPI.GetSingletonEntity<StickMovementComponent>();
-            var stick = SystemAPI.GetAspect<StickAspect>(stickEntity);
-            
+
             var playerEntity = SystemAPI.GetSingletonEntity<PlayerProperties>();
             var player = SystemAPI.GetAspect<PlayerAspect>(playerEntity);
                 
             if (_playerMoveDistance == 0)
-                _playerMoveDistance = levelBuilder.GetPlayerMoveDistance(stick.GetStickLength());
+                _playerMoveDistance = levelBuilder.GetPlayerMoveDistance(levelFlow.GetStickLength);
 
             if( player.TransformRO.Position.x < _playerMoveDistance)
                 player.Walk(SystemAPI.Time.DeltaTime);
             else
             {
                 levelBuilder.UpdateActualColumnPosition();
-                levelFlow._levelFlowProperties.ValueRW.flowState = levelBuilder.ColumnIsReachable ? LevelFlowState.CameraRun : LevelFlowState.PlayerIdle;
+                levelFlow._levelFlowProperties.ValueRW.stickIsSpawned = false;
+                levelFlow._levelFlowProperties.ValueRW.flowState = levelBuilder.ColumnIsReachable ? LevelFlowState.CameraRun : LevelFlowState.GameOver;
                 _playerMoveDistance = 0;
             }
         }

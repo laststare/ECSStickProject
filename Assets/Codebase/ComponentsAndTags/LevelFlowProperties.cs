@@ -6,5 +6,6 @@ namespace Codebase.ComponentsAndTags
     {
         public LevelFlowState flowState;
         public bool stickIsSpawned;
+        public float stickLength;
     }
 }

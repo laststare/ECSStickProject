@@ -41,6 +41,7 @@ namespace Codebase.Aspects
         public LocalTransform GetStickSpawnPosition()
         {
             var xOffset = _columnsState.ValueRO.actualColumnXPosition + 1;
+            Debug.Log(_columnsState.ValueRO.actualColumnXPosition);
             var yOffset = _levelBuilderProperties.ValueRO.playerYPosition - 1.5f;
             
             return new LocalTransform
@@ -57,15 +58,21 @@ namespace Codebase.Aspects
                                 stickLength;
 
             var offset = _columnsState.ValueRO.columnOffset;
-            _columnsState.ValueRW.columnIsReachable = moveDistance >= _columnsState.ValueRW.nextColumnXPosition - offset &&
-                                                     moveDistance <= _columnsState.ValueRW.nextColumnXPosition + offset;
-            return moveDistance;
+            var reachable = moveDistance >= GetNextColumnXPosition - offset &&
+                            moveDistance <= GetNextColumnXPosition + offset;
+            _columnsState.ValueRW.columnIsReachable = reachable;
+            return reachable ? GetNextColumnXPosition : moveDistance;
         }
-
+        
+        public void UpdateActualColumnPosition()
+        {
+            _columnsState.ValueRW.actualColumnXPosition = GetNextColumnXPosition;
+            _columnsState.ValueRW.needNextColumn = true;
+        }
+        
         public float GetActualColumnXPosition => _columnsState.ValueRO.actualColumnXPosition;
 
-        public void UpdateActualColumnPosition() =>
-            _columnsState.ValueRW.actualColumnXPosition = _columnsState.ValueRO.nextColumnXPosition;
-        
+        private float GetNextColumnXPosition => _columnsState.ValueRO.nextColumnXPosition;
+
     }
 }

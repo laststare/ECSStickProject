@@ -37,6 +37,10 @@ namespace Codebase.Systems
                 {
                     Value = float4x4.Scale(1, 1, 1f)
                 });
+                ecb.AddComponent(stick, new NewStickTag
+                {
+                    stickIsNew = true
+                });
                 levelFlow._levelFlowProperties.ValueRW.stickIsSpawned = true;
             }
             ecb.Playback(state.EntityManager);

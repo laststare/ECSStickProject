@@ -2,8 +2,8 @@
 
 namespace Codebase.ComponentsAndTags
 {
-    public class NewStickTag : IComponentData
+    public struct NewStickTag : IComponentData
     {
-        
+        public bool stickIsNew;
     }
 }

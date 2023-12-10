@@ -28,7 +28,7 @@ namespace Codebase.Systems
             {
                 case LevelFlowState.StickGrowsUp:
                 {
-                    foreach (var stick in SystemAPI.Query<StickAspect>().WithAll<StickMovementComponent>())
+                    foreach (var stick in SystemAPI.Query<StickAspect>().WithAll<NewStickTag>())
                     {
                         _stickLength += deltaTime * stick._stickMovement.ValueRO.growSpeed;
                         var matrix = float4x4.TRS(new float3(0,0,0), Quaternion.Euler(0,0,_zAxisRotation), new float3(1,_stickLength,1));
@@ -36,13 +36,12 @@ namespace Codebase.Systems
                         {
                             Value = matrix
                         });
-                        stick.SetStickLength(_stickLength * 0.25f);
                     }
                     break;
                 }
                 case LevelFlowState.StickFalls:
                 {
-                    foreach (var stick in SystemAPI.Query<StickAspect>().WithAll<StickMovementComponent>())
+                    foreach (var stick in SystemAPI.Query<StickAspect>().WithAll<NewStickTag>())
                     {
                         _zAxisRotation -= deltaTime * stick._stickMovement.ValueRO.rotationSpeed;
                         var matrix = float4x4.TRS(new float3(0,0,0), Quaternion.Euler(0,0,_zAxisRotation), new float3(1,_stickLength,1));
@@ -51,11 +50,15 @@ namespace Codebase.Systems
                             Value = matrix
                         });
                     }
+
                     if (_zAxisRotation <= -90)
                     {
+                        levelFlow.SetStickLength(_stickLength * 0.25f);
                         levelFlow._levelFlowProperties.ValueRW.flowState = LevelFlowState.PlayerRun;
                         _stickLength = 0;
                         _zAxisRotation = 0;
+                        var query = state.GetEntityQuery(typeof(NewStickTag));
+                        state.EntityManager.RemoveComponent<NewStickTag>(query); 
                     }
                     break;
                 }
