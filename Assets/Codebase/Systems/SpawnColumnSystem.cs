@@ -20,7 +20,11 @@ namespace Codebase.Systems
             
             if (!levelBuilder.StartColumnSpawned)
             {
-                ecb.Instantiate(levelBuilder.ColumnPrefab);
+                var startColumn = ecb.Instantiate(levelBuilder.ColumnPrefab);
+                ecb.AddComponent(startColumn, new ColumnProperties
+                {
+                    xPosition = 0
+                });
                 levelBuilder.StartColumnReady();
             }
 
@@ -29,6 +33,10 @@ namespace Codebase.Systems
                 var nextColumn = ecb.Instantiate(levelBuilder.ColumnPrefab);
                 var nextColumnTransform = levelBuilder.GetNextColumnPosition();
                 ecb.SetComponent(nextColumn, nextColumnTransform);
+                ecb.AddComponent(nextColumn, new ColumnProperties
+                {
+                    xPosition = nextColumnTransform.Position.x
+                });
                 levelBuilder.NextColumnReady();
             }
 

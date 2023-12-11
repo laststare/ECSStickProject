@@ -16,7 +16,6 @@ namespace Codebase.Systems
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
             var levelFlowEntity = SystemAPI.GetSingletonEntity<LevelFlowProperties>();
             var levelFlow = SystemAPI.GetAspect<LevelFlowAspect>(levelFlowEntity);
             
@@ -26,18 +25,34 @@ namespace Codebase.Systems
             if (_destroyWave && levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.PlayerIdle)
             {
 
-                var stickCount = 0;
+                var entityCount = 0;
                 var victim = new Entity();
                 var lastPosition = Mathf.Infinity;
-                foreach (var stick in SystemAPI.Query<StickAspect>().WithAll<OldStickTag>())
+                
+                foreach (var stick in SystemAPI.Query<StickAspect>())
                 {
-                    stickCount++;
-                    var stickPosition = stick.GetXPosition();
-                    if (!(stickPosition < lastPosition)) continue;
-                    lastPosition = stickPosition;
+                    entityCount++;
+                    var position = stick.GetXPosition();
+                    if (!(position < lastPosition)) continue;
+                    lastPosition = position;
                     victim = stick.Entity;
                 }
-                if(stickCount > 1)
+                if(entityCount > 1)
+                    state.EntityManager.DestroyEntity(victim);
+                
+                entityCount = 0;
+                victim = new Entity();
+                lastPosition = Mathf.Infinity;
+
+                foreach (var column in SystemAPI.Query<ColumnAspect>())
+                {
+                    entityCount++;
+                    var position = column.GetXPosition();
+                    if (!(position < lastPosition)) continue;
+                    lastPosition = position;
+                    victim = column.Entity;
+                }
+                if(entityCount > 3)
                     state.EntityManager.DestroyEntity(victim);
                 
                 _destroyWave = false;
