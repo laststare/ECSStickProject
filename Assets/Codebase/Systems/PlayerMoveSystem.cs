@@ -32,9 +32,13 @@ namespace Codebase.Systems
                 player.Walk(SystemAPI.Time.DeltaTime);
             else
             {
-                levelBuilder.UpdateActualColumnPosition();
-                levelFlow._levelFlowProperties.ValueRW.stickIsSpawned = false;
+                
                 levelFlow._levelFlowProperties.ValueRW.flowState = levelBuilder.ColumnIsReachable ? LevelFlowState.CameraRun : LevelFlowState.GameOver;
+                if (levelBuilder.ColumnIsReachable)
+                {
+                    levelBuilder.UpdateActualColumnPosition();
+                    levelFlow._levelFlowProperties.ValueRW.stickIsSpawned = false;  
+                }
                 _playerMoveDistance = 0;
             }
         }

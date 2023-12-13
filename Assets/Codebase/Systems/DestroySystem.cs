@@ -1,8 +1,6 @@
-﻿using System;
-using Codebase.Aspects;
+﻿using Codebase.Aspects;
 using Codebase.ComponentsAndTags;
 using Unity.Burst;
-using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
@@ -12,6 +10,9 @@ namespace Codebase.Systems
     public partial struct DestroySystem :  ISystem
     {
         private bool _destroyWave;
+        private int entityCount;
+        private Entity victim;
+        private float lastPosition;
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
@@ -25,40 +26,69 @@ namespace Codebase.Systems
             if (_destroyWave && levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.PlayerIdle)
             {
 
-                var entityCount = 0;
-                var victim = new Entity();
-                var lastPosition = Mathf.Infinity;
-                
-                foreach (var stick in SystemAPI.Query<StickAspect>())
-                {
-                    entityCount++;
-                    var position = stick.GetXPosition();
-                    if (!(position < lastPosition)) continue;
-                    lastPosition = position;
-                    victim = stick.Entity;
-                }
-                if(entityCount > 1)
-                    state.EntityManager.DestroyEntity(victim);
-                
-                entityCount = 0;
-                victim = new Entity();
-                lastPosition = Mathf.Infinity;
-
-                foreach (var column in SystemAPI.Query<ColumnAspect>())
-                {
-                    entityCount++;
-                    var position = column.GetXPosition();
-                    if (!(position < lastPosition)) continue;
-                    lastPosition = position;
-                    victim = column.Entity;
-                }
-                if(entityCount > 3)
-                    state.EntityManager.DestroyEntity(victim);
-                
+                DestroySticks(ref state, 1);
+                DestroyColumns(ref state, 3);
                 _destroyWave = false;
             }
+
+            if (_destroyWave && levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.GameOver)
+            {
+                DestroyAllSticks(ref state);
+                DestroyAllColumns(ref state);
+                _destroyWave = false;
+            }
+            
         }
 
-       
+        private void ClearVars()
+        {
+            entityCount = 0;
+            victim = Entity.Null;
+            lastPosition = Mathf.Infinity;
+        }
+
+        private void DestroySticks(ref SystemState state, int limit)
+        {
+            ClearVars();
+            foreach (var stick in SystemAPI.Query<StickAspect>())
+            {
+                entityCount++;
+                var position = stick.GetXPosition();
+                if (!(position < lastPosition)) continue;
+                lastPosition = position;
+                victim = stick.Entity;
+            }
+            if(entityCount > limit)
+                state.EntityManager.DestroyEntity(victim);
+        }
+
+        private void DestroyColumns(ref SystemState state, int limit)
+        {
+            ClearVars();
+            foreach (var column in SystemAPI.Query<ColumnAspect>())
+            {
+                entityCount++;
+                var position = column.GetXPosition();
+                if (!(position < lastPosition)) continue;
+                lastPosition = position;
+                victim = column.Entity;
+            }
+            if(entityCount > limit)
+                state.EntityManager.DestroyEntity(victim);
+        }
+        
+        private void DestroyAllSticks(ref SystemState state)
+        {
+            EntityQuery group = state.GetEntityQuery(typeof(StickMovementComponent));
+            state.EntityManager.DestroyEntity(group);
+        }
+        
+        private void DestroyAllColumns(ref SystemState state)
+        {
+            EntityQuery group = state.GetEntityQuery(typeof(ColumnProperties));
+            state.EntityManager.DestroyEntity(group);
+        }
+
+
     }
 }
