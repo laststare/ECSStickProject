@@ -15,6 +15,13 @@ namespace Codebase.Aspects
 
         public bool StartColumnSpawned => _columnsState.ValueRW.startColumnSpawned;
 
+        public void Restart()
+        {
+            _columnsState.ValueRW.actualColumnXPosition = 0;
+            _columnsState.ValueRW.startColumnSpawned = false;
+            _columnsState.ValueRW.needNextColumn = true;
+        }
+
         public bool NeedNextColumn => _columnsState.ValueRW.needNextColumn;
         
         public bool ColumnIsReachable => _columnsState.ValueRO.columnIsReachable;

@@ -16,8 +16,14 @@ namespace Codebase.Systems
             var levelBuilderEntity = SystemAPI.GetSingletonEntity<LevelBuilderProperties>();
             var levelBuilder = SystemAPI.GetAspect<LevelBuilderAspect>(levelBuilderEntity);
             
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
+            var levelFlowEntity = SystemAPI.GetSingletonEntity<LevelFlowProperties>();
+            var levelFlow = SystemAPI.GetAspect<LevelFlowAspect>(levelFlowEntity);
             
+            var ecb = new EntityCommandBuffer(Allocator.Temp);
+
+            if (levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.Start) 
+                levelBuilder.Restart();
+
             if (!levelBuilder.StartColumnSpawned)
             {
                 var startColumn = ecb.Instantiate(levelBuilder.ColumnPrefab);

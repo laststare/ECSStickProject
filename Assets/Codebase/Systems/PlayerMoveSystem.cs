@@ -23,6 +23,7 @@ namespace Codebase.Systems
             if (levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.Start)
             {
                 player.MoveToStart();
+                levelFlow._levelFlowProperties.ValueRW.stickIsSpawned = false; 
             }
 
             if (levelFlow._levelFlowProperties.ValueRO.flowState != LevelFlowState.PlayerRun) return;
