@@ -7,6 +7,7 @@ namespace Codebase.AuthoringAndMono
     public class PlayerMono : MonoBehaviour
     {
         public float moveSpeed;
+        public float startXPosition;
     }
     
     public class PlayerMonoBaker : Baker<PlayerMono>
@@ -16,7 +17,8 @@ namespace Codebase.AuthoringAndMono
             var player = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(player, new PlayerProperties
             {
-                moveSpeed = authoring.moveSpeed
+                moveSpeed = authoring.moveSpeed,
+                startXPosition = authoring.startXPosition
             });
         }
     }

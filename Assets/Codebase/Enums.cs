@@ -8,7 +8,8 @@
         StickFalls,
         PlayerRun,
         CameraRun, 
-        GameOver
+        GameOver,
+        Start,
     }
 
     public enum MainMenuButton

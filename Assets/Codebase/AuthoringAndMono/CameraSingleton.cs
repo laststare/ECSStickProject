@@ -7,6 +7,7 @@ namespace Codebase.AuthoringAndMono
         public static CameraSingleton Instance;
         public float moveSpeed;
         public float xOffset;
+        public float startXPosition;
         
         private void Awake()
         {

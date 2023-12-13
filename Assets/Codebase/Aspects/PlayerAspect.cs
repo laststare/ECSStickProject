@@ -1,5 +1,6 @@
 ﻿using Codebase.ComponentsAndTags;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace Codebase.Aspects
@@ -15,6 +16,12 @@ namespace Codebase.Aspects
         public void Walk(float deltaTime)
         {
             _transform.ValueRW.Position += _transform.ValueRO.Right() * _playerProperties.ValueRO.moveSpeed * deltaTime;
+        }
+
+        public void MoveToStart()
+        {
+            _transform.ValueRW.Position =
+                new float3(_playerProperties.ValueRO.startXPosition, _transform.ValueRW.Position.y, _transform.ValueRW.Position.z);
         }
     }
 }

@@ -2,11 +2,11 @@
 using Codebase.ComponentsAndTags;
 using Unity.Burst;
 using Unity.Entities;
-using UnityEngine;
 
 namespace Codebase.Systems
 {
     [BurstCompile]
+    [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial class PlayerMoveSystem : SystemBase
     {
         private float _playerMoveDistance;
@@ -16,14 +16,21 @@ namespace Codebase.Systems
         {
             var levelFlowEntity = SystemAPI.GetSingletonEntity<LevelFlowProperties>();
             var levelFlow = SystemAPI.GetAspect<LevelFlowAspect>(levelFlowEntity);
+            
+            var playerEntity = SystemAPI.GetSingletonEntity<PlayerProperties>();
+            var player = SystemAPI.GetAspect<PlayerAspect>(playerEntity);
+            
+            if (levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.Start)
+            {
+                player.MoveToStart();
+            }
 
             if (levelFlow._levelFlowProperties.ValueRO.flowState != LevelFlowState.PlayerRun) return;
             
             var levelBuilderEntity = SystemAPI.GetSingletonEntity<LevelBuilderProperties>();
             var levelBuilder = SystemAPI.GetAspect<LevelBuilderAspect>(levelBuilderEntity);
 
-            var playerEntity = SystemAPI.GetSingletonEntity<PlayerProperties>();
-            var player = SystemAPI.GetAspect<PlayerAspect>(playerEntity);
+           
                 
             if (_playerMoveDistance == 0)
                 _playerMoveDistance = levelBuilder.GetPlayerMoveDistance(levelFlow.GetStickLength);
@@ -41,6 +48,8 @@ namespace Codebase.Systems
                 }
                 _playerMoveDistance = 0;
             }
+
+            
         }
     }
 }
