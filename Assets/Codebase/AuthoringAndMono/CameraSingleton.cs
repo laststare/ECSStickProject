@@ -19,6 +19,12 @@ namespace Codebase.AuthoringAndMono
 
             Instance = this;
         }
+
+        public void MoveToSTart()
+        {
+            var cameraTransform = transform;
+            cameraTransform.position = new Vector3(startXPosition, cameraTransform.position.y, cameraTransform.position.z);
+        }
     }
     
 }

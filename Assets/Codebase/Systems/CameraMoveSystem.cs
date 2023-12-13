@@ -19,14 +19,21 @@ namespace Codebase.Systems
         {
             var levelFlowEntity = SystemAPI.GetSingletonEntity<LevelFlowProperties>();
             var levelFlow = SystemAPI.GetAspect<LevelFlowAspect>(levelFlowEntity);
+            
+            var cameraSingleton = CameraSingleton.Instance;
+            if (cameraSingleton == null) return;
+            
+            if (levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.Start)
+            {
+                cameraSingleton.MoveToSTart();
+            }
 
             if (levelFlow._levelFlowProperties.ValueRO.flowState != LevelFlowState.CameraRun) return;
             
             var levelBuilderEntity = SystemAPI.GetSingletonEntity<LevelBuilderProperties>();
             var levelBuilder = SystemAPI.GetAspect<LevelBuilderAspect>(levelBuilderEntity);
 
-            var cameraSingleton = CameraSingleton.Instance;
-            if (cameraSingleton == null) return;
+           
             
             if (_cameraMoveDistance == 0)
                 _cameraMoveDistance = levelBuilder.GetActualColumnXPosition + cameraSingleton.xOffset;
