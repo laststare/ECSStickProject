@@ -23,12 +23,12 @@ namespace Codebase.Systems
             var cameraSingleton = CameraSingleton.Instance;
             if (cameraSingleton == null) return;
             
-            if (levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.Start)
+            if (levelFlow.GetState == LevelFlowState.Start)
             {
                 cameraSingleton.MoveToSTart();
             }
 
-            if (levelFlow._levelFlowProperties.ValueRO.flowState != LevelFlowState.CameraRun) return;
+            if (levelFlow.GetState != LevelFlowState.CameraRun) return;
             
             var levelBuilderEntity = SystemAPI.GetSingletonEntity<LevelBuilderProperties>();
             var levelBuilder = SystemAPI.GetAspect<LevelBuilderAspect>(levelBuilderEntity);
@@ -44,7 +44,7 @@ namespace Codebase.Systems
             }
             else
             {
-                levelFlow._levelFlowProperties.ValueRW.flowState = LevelFlowState.PlayerIdle;
+                levelFlow.SetState(LevelFlowState.PlayerIdle);
                 _cameraMoveDistance = 0;
             }
         }

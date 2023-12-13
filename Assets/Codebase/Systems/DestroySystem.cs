@@ -20,10 +20,10 @@ namespace Codebase.Systems
             var levelFlowEntity = SystemAPI.GetSingletonEntity<LevelFlowProperties>();
             var levelFlow = SystemAPI.GetAspect<LevelFlowAspect>(levelFlowEntity);
             
-            if(levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.PlayerRun)
+            if(levelFlow.GetState == LevelFlowState.PlayerRun)
                 _destroyWave = true;
 
-            if (_destroyWave && levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.PlayerIdle)
+            if (_destroyWave && levelFlow.GetState == LevelFlowState.PlayerIdle)
             {
 
                 DestroySticks(ref state, 1);
@@ -31,7 +31,7 @@ namespace Codebase.Systems
                 _destroyWave = false;
             }
 
-            if (_destroyWave && levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.GameOver)
+            if (_destroyWave && levelFlow.GetState == LevelFlowState.GameOver)
             {
                 DestroyAllSticks(ref state);
                 DestroyAllColumns(ref state);
@@ -79,13 +79,13 @@ namespace Codebase.Systems
         
         private void DestroyAllSticks(ref SystemState state)
         {
-            EntityQuery group = state.GetEntityQuery(typeof(StickMovementComponent));
+            var group = state.GetEntityQuery(typeof(StickMovementComponent));
             state.EntityManager.DestroyEntity(group);
         }
         
         private void DestroyAllColumns(ref SystemState state)
         {
-            EntityQuery group = state.GetEntityQuery(typeof(ColumnProperties));
+            var group = state.GetEntityQuery(typeof(ColumnProperties));
             state.EntityManager.DestroyEntity(group);
         }
 

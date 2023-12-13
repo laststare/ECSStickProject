@@ -22,7 +22,7 @@ namespace Codebase.Systems
             
             var ecb = new EntityCommandBuffer(Allocator.Temp);
             
-            if (levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.StickGrowsUp && !levelFlow._levelFlowProperties.ValueRO.stickIsSpawned)
+            if (levelFlow.GetState == LevelFlowState.StickGrowsUp && !levelFlow.IsStickSpawned)
             {
                 var stick = ecb.Instantiate(levelBuilder.StickPrefab);
                 var stickTransform = levelBuilder.GetStickSpawnPosition();
@@ -42,7 +42,7 @@ namespace Codebase.Systems
                 {
                     stickIsNew = true
                 });
-                levelFlow._levelFlowProperties.ValueRW.stickIsSpawned = true;
+                levelFlow.SetStickSpawned(true);
             }
             ecb.Playback(state.EntityManager);
         }

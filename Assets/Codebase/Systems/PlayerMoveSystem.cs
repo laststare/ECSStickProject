@@ -20,13 +20,13 @@ namespace Codebase.Systems
             var playerEntity = SystemAPI.GetSingletonEntity<PlayerProperties>();
             var player = SystemAPI.GetAspect<PlayerAspect>(playerEntity);
             
-            if (levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.Start)
+            if (levelFlow.GetState == LevelFlowState.Start)
             {
                 player.MoveToStart();
-                levelFlow._levelFlowProperties.ValueRW.stickIsSpawned = false; 
+                levelFlow.SetStickSpawned(false);
             }
 
-            if (levelFlow._levelFlowProperties.ValueRO.flowState != LevelFlowState.PlayerRun) return;
+            if (levelFlow.GetState != LevelFlowState.PlayerRun) return;
             
             var levelBuilderEntity = SystemAPI.GetSingletonEntity<LevelBuilderProperties>();
             var levelBuilder = SystemAPI.GetAspect<LevelBuilderAspect>(levelBuilderEntity);
@@ -41,11 +41,11 @@ namespace Codebase.Systems
             else
             {
                 
-                levelFlow._levelFlowProperties.ValueRW.flowState = levelBuilder.ColumnIsReachable ? LevelFlowState.CameraRun : LevelFlowState.GameOver;
+                levelFlow.SetState(levelBuilder.ColumnIsReachable ? LevelFlowState.CameraRun : LevelFlowState.GameOver);
                 if (levelBuilder.ColumnIsReachable)
                 {
                     levelBuilder.UpdateActualColumnPosition();
-                    levelFlow._levelFlowProperties.ValueRW.stickIsSpawned = false;  
+                    levelFlow.SetStickSpawned(false);
                 }
                 _playerMoveDistance = 0;
             }

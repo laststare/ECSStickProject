@@ -24,7 +24,7 @@ namespace Codebase.Systems
             var levelFlow = SystemAPI.GetAspect<LevelFlowAspect>(levelFlowEntity);
             var deltaTime = SystemAPI.Time.DeltaTime;
 
-            switch (levelFlow._levelFlowProperties.ValueRO.flowState)
+            switch (levelFlow.GetState)
             {
                 case LevelFlowState.StickGrowsUp:
                 {
@@ -54,7 +54,7 @@ namespace Codebase.Systems
                     if (_zAxisRotation <= -90)
                     {
                         levelFlow.SetStickLength(_stickLength * 0.25f);
-                        levelFlow._levelFlowProperties.ValueRW.flowState = LevelFlowState.PlayerRun;
+                        levelFlow.SetState(LevelFlowState.PlayerRun);
                         _stickLength = 0;
                         _zAxisRotation = 0;
                         var query = state.GetEntityQuery(typeof(NewStickTag));

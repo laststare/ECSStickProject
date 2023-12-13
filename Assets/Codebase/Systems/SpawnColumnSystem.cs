@@ -21,7 +21,7 @@ namespace Codebase.Systems
             
             var ecb = new EntityCommandBuffer(Allocator.Temp);
 
-            if (levelFlow._levelFlowProperties.ValueRO.flowState == LevelFlowState.Start) 
+            if (levelFlow.GetState == LevelFlowState.Start) 
                 levelBuilder.Restart();
 
             if (!levelBuilder.StartColumnSpawned)
