@@ -16,12 +16,10 @@ namespace Codebase.Systems
             {
                 LevelFlowState.PlayerIdle when isClicked => LevelFlowState.StickGrowsUp,
                 LevelFlowState.StickGrowsUp when !isClicked => LevelFlowState.StickFalls,
-                LevelFlowState.GameOver => LevelFlowState.Start,
+            // LevelFlowState.GameOver => LevelFlowState.Start,
                 LevelFlowState.Start => LevelFlowState.PlayerIdle,
                 _ => levelFlow.GetState
             } ); 
-         
-            
             
         }
         

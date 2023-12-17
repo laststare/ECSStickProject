@@ -2,8 +2,10 @@
 using Codebase.Aspects;
 using Codebase.ComponentsAndTags;
 using Unity.Burst;
+using Unity.Burst.CompilerServices;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace Codebase.Systems
 {
@@ -13,8 +15,15 @@ namespace Codebase.Systems
     {
         private float _playerMoveDistance;
         private bool _getReward;
-        private int _currentScore;
+        private int _currentScore, _bestScore;
         public Action<int, float3> OnColumnIsReachable;
+        public Action<string, string> OnGameOver;
+
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            _bestScore = PlayerPrefs.GetInt("saved_score");
+        }
 
 
         [BurstCompile]
@@ -46,6 +55,12 @@ namespace Codebase.Systems
                 _currentScore += player.GetColumnReward;
                 OnColumnIsReachable?.Invoke(player.GetColumnReward,
                     new float3(levelBuilder.GetNextColumnXPosition, levelBuilder.GetPlayerYPosition, 0));
+                if (_currentScore > _bestScore)
+                {
+                    _bestScore = _currentScore;
+                    PlayerPrefs.SetInt("saved_score", _bestScore);
+                }
+
                 _getReward = true;
             }
 
@@ -59,6 +74,9 @@ namespace Codebase.Systems
                     levelBuilder.UpdateActualColumnPosition();
                     levelFlow.SetStickSpawned(false);
                 }
+                else
+                    OnGameOver?.Invoke(_bestScore.ToString(), _currentScore.ToString());
+
                 _getReward = false;
                 _playerMoveDistance = 0;
             }
