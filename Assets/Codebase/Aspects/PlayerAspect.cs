@@ -10,6 +10,8 @@ namespace Codebase.Aspects
         private readonly RefRW<LocalTransform> _transform;
         private readonly RefRW<PlayerProperties> _playerProperties;
         public LocalTransform TransformRO => _transform.ValueRO;
+
+        public int GetColumnReward => _playerProperties.ValueRO.columnReward;
         
         public void Walk(float deltaTime) => _transform.ValueRW.Position += _transform.ValueRO.Right() * _playerProperties.ValueRO.moveSpeed * deltaTime;
 

@@ -15,6 +15,8 @@ namespace Codebase.Aspects
 
         public bool StartColumnSpawned => _columnsState.ValueRW.startColumnSpawned;
 
+        public float GetPlayerYPosition => _levelBuilderProperties.ValueRO.playerYPosition;
+
         public void Restart()
         {
             _columnsState.ValueRW.actualColumnXPosition = 0;
@@ -44,6 +46,7 @@ namespace Codebase.Aspects
                 Scale = 1f
             };
         }
+        
         
         public LocalTransform GetStickSpawnPosition()
         {
@@ -78,7 +81,7 @@ namespace Codebase.Aspects
         
         public float GetActualColumnXPosition => _columnsState.ValueRO.actualColumnXPosition;
 
-        private float GetNextColumnXPosition => _columnsState.ValueRO.nextColumnXPosition;
+        public float GetNextColumnXPosition => _columnsState.ValueRO.nextColumnXPosition;
 
     }
 }

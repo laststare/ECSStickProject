@@ -15,6 +15,7 @@ namespace Codebase.Systems
     {
         private float _stickLength;
         private float _zAxisRotation;
+
         
         [BurstCompile]
         public void OnUpdate(ref SystemState state)

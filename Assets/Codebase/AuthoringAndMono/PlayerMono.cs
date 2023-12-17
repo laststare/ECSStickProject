@@ -8,6 +8,7 @@ namespace Codebase.AuthoringAndMono
     {
         public float moveSpeed;
         public float startXPosition;
+        public int columnReward;
     }
     
     public class PlayerMonoBaker : Baker<PlayerMono>
@@ -18,7 +19,8 @@ namespace Codebase.AuthoringAndMono
             AddComponent(player, new PlayerProperties
             {
                 moveSpeed = authoring.moveSpeed,
-                startXPosition = authoring.startXPosition
+                startXPosition = authoring.startXPosition,
+                columnReward = authoring.columnReward
             });
         }
     }

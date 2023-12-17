@@ -6,5 +6,6 @@ namespace Codebase.ComponentsAndTags
     {
         public float moveSpeed;
         public float startXPosition;
+        public int columnReward;
     }
 }
