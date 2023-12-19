@@ -58,7 +58,7 @@ namespace Codebase.Systems
                         levelFlow.SetState(LevelFlowState.PlayerRun);
                         _stickLength = 0;
                         _zAxisRotation = 0;
-                        var query = state.GetEntityQuery(typeof(NewStickTag));
+                        var query = state.GetEntityQuery(ComponentType.ReadOnly<NewStickTag>());
                         ecb.RemoveComponent<NewStickTag>(query);
                         ecb.AddComponent<OldStickTag>(query);
                     }

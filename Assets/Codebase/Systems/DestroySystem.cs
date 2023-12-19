@@ -1,6 +1,7 @@
 ﻿using Codebase.Aspects;
 using Codebase.ComponentsAndTags;
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
@@ -79,13 +80,13 @@ namespace Codebase.Systems
         
         private void DestroyAllSticks(ref SystemState state)
         {
-            var group = state.GetEntityQuery(typeof(StickMovementComponent));
+            var group = state.GetEntityQuery(ComponentType.ReadOnly<StickMovementComponent>());
             state.EntityManager.DestroyEntity(group);
         }
         
         private void DestroyAllColumns(ref SystemState state)
         {
-            var group = state.GetEntityQuery(typeof(ColumnProperties));
+            var group = state.GetEntityQuery(ComponentType.ReadOnly<ColumnProperties>());
             state.EntityManager.DestroyEntity(group);
         }
 
