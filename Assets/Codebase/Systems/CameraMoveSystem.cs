@@ -23,7 +23,7 @@ namespace Codebase.Systems
             var cameraSingleton = CameraSingleton.Instance;
             if (cameraSingleton == null) return;
             
-            if (levelFlow.GetState == LevelFlowState.Start)
+            if (levelFlow.GetState == LevelFlowState.Restart)
             {
                 cameraSingleton.MoveToSTart();
             }

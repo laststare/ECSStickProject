@@ -3,19 +3,15 @@
     public enum LevelFlowState
     {
         None,
+        StartMenu,
+        FinishMenu,
         PlayerIdle,
         StickGrowsUp,
         StickFalls,
         PlayerRun,
         CameraRun, 
         GameOver,
-        Start,
+        Restart,
     }
-
-    public enum MainMenuButton
-    {
-        StartGame,
-        RestartGame,
-        BackToStartScreen
-    }
+    
 }

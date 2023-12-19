@@ -17,15 +17,17 @@ namespace Codebase.Systems
         private bool _getReward;
         private int _currentScore, _bestScore;
         public Action<int, float3> OnColumnIsReachable;
-        public Action<string, string> OnGameOver;
+        public Action<string, string> OnScoreAdded;
+        public int BestScore => _bestScore;
 
+        [BurstCompile]
         protected override void OnCreate()
         {
             base.OnCreate();
             _bestScore = PlayerPrefs.GetInt("saved_score");
         }
-
-
+        
+        
         [BurstCompile]
         protected override void OnUpdate()
         {
@@ -35,7 +37,7 @@ namespace Codebase.Systems
             var playerEntity = SystemAPI.GetSingletonEntity<PlayerProperties>();
             var player = SystemAPI.GetAspect<PlayerAspect>(playerEntity);
             
-            if (levelFlow.GetState == LevelFlowState.Start)
+            if (levelFlow.GetState == LevelFlowState.Restart)
             {
                 player.MoveToStart();
                 levelFlow.SetStickSpawned(false);
@@ -53,6 +55,7 @@ namespace Codebase.Systems
             if (levelBuilder.ColumnIsReachable && !_getReward)
             {
                 _currentScore += player.GetColumnReward;
+                OnScoreAdded?.Invoke(_bestScore.ToString(), _currentScore.ToString());
                 OnColumnIsReachable?.Invoke(player.GetColumnReward,
                     new float3(levelBuilder.GetNextColumnXPosition, levelBuilder.GetPlayerYPosition, 0));
                 if (_currentScore > _bestScore)
@@ -75,7 +78,7 @@ namespace Codebase.Systems
                     levelFlow.SetStickSpawned(false);
                 }
                 else
-                    OnGameOver?.Invoke(_bestScore.ToString(), _currentScore.ToString());
+                    _currentScore = 0;
 
                 _getReward = false;
                 _playerMoveDistance = 0;

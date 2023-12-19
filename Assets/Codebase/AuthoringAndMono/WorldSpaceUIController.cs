@@ -1,5 +1,4 @@
-﻿using System;
-using Codebase.Systems;
+﻿using Codebase.Systems;
 using DG.Tweening;
 using TMPro;
 using Unity.Entities;
